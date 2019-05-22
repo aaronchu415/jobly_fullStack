@@ -7,22 +7,22 @@ class NavBar extends Component {
 		const isLoginNav = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item mr-4">
-					<Link className="nav-link" href="/companies">
+					<Link className="nav-link" to="/companies">
 						Companies
 					</Link>
 				</li>
 				<li className="nav-item mr-4">
-					<Link className="nav-link" href="/jobs">
+					<Link className="nav-link" to="/jobs">
 						Jobs
 					</Link>
 				</li>
 				<li className="nav-item mr-4">
-					<Link className="nav-link" href="/profile">
+					<Link className="nav-link" to="/profile">
 						Profile
 					</Link>
 				</li>
 				<li className="nav-item">
-					<Link className="nav-link" href="/">
+					<Link className="nav-link" to="/">
 						Log out
 					</Link>
 				</li>
@@ -31,7 +31,7 @@ class NavBar extends Component {
 		const notLoginNav = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item">
-					<Link className="nav-link" href="/login">
+					<Link className="nav-link" to="/login">
 						Log In
 					</Link>
 				</li>
@@ -39,10 +39,10 @@ class NavBar extends Component {
 		);
 		return (
 			<nav className="Navigation navbar navbar-expand-md">
-				<Link className="navbar-brand" href="/">
+				<Link className="navbar-brand" to="/">
 					Jobly
 				</Link>
-				{this.props.isLogin ? { isLoginNav } : { notLoginNav }}
+				{this.props.isLogin ? isLoginNav : notLoginNav}
 			</nav>
 		);
 	}
