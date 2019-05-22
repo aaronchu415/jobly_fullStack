@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component, Link } from 'react';
 
 class NavBar extends Component {
 	state = {};
 	render() {
 		return (
-			<nav class="Navigation navbar navbar-expand-md">
-				<a class="navbar-brand" href="/">
+			<nav className="Navigation navbar navbar-expand-md">
+				<Link className="navbar-brand" href="/">
 					Jobly
-				</a>
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item mr-4">
-						<a class="nav-link" href="/companies">
+				</Link>
+				<ul className="navbar-nav ml-auto">
+					<li className="nav-item mr-4">
+						<Link className="nav-link" href="/companies">
 							Companies
-						</a>
+						</Link>
 					</li>
-					<li class="nav-item mr-4">
-						<a class="nav-link" href="/jobs">
+					<li className="nav-item mr-4">
+						<Link className="nav-link" href="/jobs">
 							Jobs
-						</a>
+						</Link>
 					</li>
-					<li class="nav-item mr-4">
-						<a class="nav-link" href="/profile">
+					<li className="nav-item mr-4">
+						<Link className="nav-link" href="/profile">
 							Profile
-						</a>
+						</Link>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/">
+					<li className="nav-item">
+						<Link className="nav-link" href="/">
 							Log out
-						</a>
+						</Link>
 					</li>
 				</ul>
 			</nav>
