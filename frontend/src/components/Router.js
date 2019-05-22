@@ -20,7 +20,7 @@ class Router extends Component {
   }
 
   async componentDidMount() {
-    // localStorage.setItem('_token', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g")
+    localStorage.setItem('_token', "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g")
 
     let token = localStorage.getItem('_token')
     if (token) {

@@ -5,21 +5,21 @@ import Search from '../../common/Search';
 
 class Jobs extends Component {
 	state = {
-    jobs: []
-  };
-  async componentDidMount() {
+		jobs: []
+	};
+	async componentDidMount() {
 		await this.handleSearch();
-  }
+	}
 
-  handleSearch = async (search = '') => {
+	handleSearch = async (search = '') => {
 		let res = await JoblyApi.request('jobs', { search }, 'get');
 		let jobs = res.jobs;
 		this.setState({ jobs });
 		return res;
-  };
-  
+	};
+
 	render() {
-		const { jobs } = this.state;    
+		const { jobs } = this.state;
 		return (
 			<div className="pt-5">
 				<div className="col-md-8 offset-md-2">
