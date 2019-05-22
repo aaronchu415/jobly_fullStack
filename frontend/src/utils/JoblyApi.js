@@ -3,8 +3,8 @@ import axios from 'axios'
 
 class JoblyApi {
   static async request(endpoint, paramsOrData = {}, verb = "get") {
-    paramsOrData._token = ( // for now, hardcode token for "testing"
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g");
+    // paramsOrData._token = ( // for now, hardcode token for "testing"
+    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g");
 
     console.debug("API Call:", endpoint, paramsOrData, verb);
 
