@@ -3,10 +3,8 @@ import axios from 'axios'
 
 class JoblyApi {
   static async request(endpoint, paramsOrData = {}, verb = "get") {
-    // paramsOrData._token = ( // for now, hardcode token for "testing"
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc" +
-    //   "3RpbmciLCJpc19hZG1pbiI6ZmFsc2UsImlhdCI6MTU1MzcwMzE1M30" +
-    //   "COmFETEsTxN_VfIlgIKw0bYJLkvbRQNgO1XCSE8NZ0U");
+    paramsOrData._token = ( // for now, hardcode token for "testing"
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g");
 
     console.debug("API Call:", endpoint, paramsOrData, verb);
 
@@ -35,6 +33,6 @@ class JoblyApi {
 }
 
 // JoblyApi.request('login', { username: 'testuser', password: 'secret' }, 'post').then(console.log)
-// JoblyApi.request('companies', { _token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NDcyNTN9.Pjk96Re7O8UM4Qac7N2IroIQLOCv0RBNm59lXIJoEWg' }, 'get').then(console.log)
+// JoblyApi.request('companies', {}, 'get').then(console.log)
 
 export default JoblyApi

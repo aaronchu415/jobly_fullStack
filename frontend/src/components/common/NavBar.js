@@ -49,4 +49,8 @@ class NavBar extends Component {
 	}
 }
 
+NavBar.defaultProps = {
+	isLogin: false
+}
+
 export default NavBar;

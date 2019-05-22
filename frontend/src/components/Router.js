@@ -10,18 +10,20 @@ import NavBar from './common/NavBar';
 
 
 class Router extends Component {
-  state = {}
+  state = {
+  }
 
   render() {
     return (
       <BrowserRouter>
+        <NavBar />
         <Switch>
           <Route exact path="/jobs" render={() => <Jobs />} />
           <Route exact path="/login" render={() => <Login />} />
           <Route exact path="/profile" render={() => <Profile />} />
           <Route exact path="/companies" render={() => <Companies />} />
           <Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} />} />
-          <Route exact path="/" render={() => <NavBar isLogin={true} />} />
+          <Route exact path="/" render={() => <Home></Home>} />
         </Switch>
       </BrowserRouter>);
   }
