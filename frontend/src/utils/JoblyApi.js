@@ -1,4 +1,5 @@
 import axios from 'axios'
+// var axios = require('axios')
 
 class JoblyApi {
   static async request(endpoint, paramsOrData = {}, verb = "get") {
