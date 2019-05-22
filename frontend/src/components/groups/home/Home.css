@@ -1,0 +1,10 @@
+.Home {
+  height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+}
+
+.Lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
