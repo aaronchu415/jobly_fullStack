@@ -17,7 +17,17 @@ class Router extends Component {
 	};
 
 	async componentDidMount() {
+		await this.requestUserInfo();
+	}
+	handleLogout = () => {
+		this.setState({ currUser: null });
+	};
 
+	handleLogin = (currUser) => {
+		this.setState({ currUser });
+	};
+
+	requestUserInfo = async () => {
 		let token = localStorage.getItem('_token');
 		if (token) {
 			//get username from token
@@ -29,14 +39,6 @@ class Router extends Component {
 			} catch (e) { }
 		}
 	}
-	handleLogout = () => {
-		this.setState({ currUser: null });
-	};
-
-	handleLogin = (currUser) => {
-
-		this.setState({ currUser });
-	};
 
 	render() {
 		const { currUser } = this.state;
@@ -47,7 +49,7 @@ class Router extends Component {
 				<BrowserRouter>
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
 					<Switch>
-						<Route exact path="/jobs" render={() => <Jobs />} />
+						<Route exact path="/jobs" render={() => <Jobs username={currUser.username} jobs={currUser.jobs} requestUserInfo={this.requestUserInfo}/>} />
 						<Route exact path="/profile" render={() => <Profile />} />
 						<Route exact path="/companies" render={() => <Companies />} />
 						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} />} />

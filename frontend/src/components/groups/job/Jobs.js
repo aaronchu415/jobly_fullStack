@@ -5,7 +5,9 @@ import Search from '../../common/Search';
 
 class Jobs extends Component {
 	state = {
-		jobs: []
+		username: "",
+		searchedjJobs: [],
+		
 	};
 	async componentDidMount() {
 		await this.handleSearch();
@@ -13,19 +15,34 @@ class Jobs extends Component {
 
 	handleSearch = async (search = '') => {
 		let res = await JoblyApi.request('jobs', { search }, 'get');
-		let jobs = res.jobs;
-		this.setState({ jobs });
+		let searchedjJobs = this.isAppliedJobs(res.jobs);
+		this.setState({ searchedjJobs });
 		return res;
 	};
 
+	// componentDidUpdate() {
+	// 	this.setState(this.props)
+	// }
+	handleApply = () => {
+		// TODO: send post request ot jobs/apply/jobId
+		// to update state of parent
+		this.props.requestUserInfo()
+	}
+	isAppliedJobs = (jobs) => {
+		jobs = jobs.map((job) => this.props.appliedJobs.filter(job) ? job['isApplied'] = true : job['isApplied'] = false);
+		return jobs
+	}
+
 	render() {
-		const { jobs } = this.state;
+		const { searchedjJobs } = this.state;
 		return (
 			<div className="pt-5">
 				<div className="col-md-8 offset-md-2">
 					<Search submit={this.handleSearch} />
 					<div className="CardList">
-						{jobs.map((job) => <JobCard key={job.id} {...job} />)}
+						{/* TODO: isApplied if statement in  */}
+						{searchedjJobs.map((job) => <JobCard key={job.id} {...job} handleApply={this.handleApply}/>)}
+
 					</div>
 				</div>
 			</div>
