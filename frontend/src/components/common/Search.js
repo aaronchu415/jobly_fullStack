@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import _ from 'lodash'
 
 class Search extends Component {
 	state = {
@@ -6,22 +7,27 @@ class Search extends Component {
 	};
 
 	handleChange = (evt) => {
+		const { search } = this.state
 		this.setState({ [evt.target.name]: evt.target.value })
+		this.handleSubmit(evt);
+
 	}
 
-	handleSubmit = (e) => {
+	handleSubmit = _.debounce((e) => {
 		const { search } = this.state
-		e.preventDefault();
+		// e.preventDefault();
 		this.props.submit(search);
-		this.setState({ search: '' })
-	}
+		// this.setState({ search: '' })
+	}, 200)
 
 	render() {
 		const { search } = this.state
 
+
+
 		return (
 			<div className="Search mb-4">
-				<form className="form-inline" onSubmit={this.handleSubmit}>
+				<form className="form-inline">
 					<input
 						className="form-control form-control-lg flex-grow-1"
 						name="search"
@@ -29,9 +35,6 @@ class Search extends Component {
 						value={search}
 						onChange={this.handleChange}
 					/>
-					<button type="submit" className="btn btn-lg btn-primary">
-						Submit
-					</button>
 				</form>
 			</div>
 		);
