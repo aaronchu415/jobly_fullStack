@@ -4,7 +4,15 @@ import './NavBar.css';
 
 class NavBar extends Component {
 	state = {};
+
+	handleLogout = () => {
+		// state will reset on Router
+		localStorage.removeItem('_token');
+		this.props.handleLogout()
+	}
+
 	render() {
+		// display different NavBar for login || logout user
 		const isLoginNav = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item mr-4">
@@ -23,7 +31,7 @@ class NavBar extends Component {
 					</Link>
 				</li>
 				<li className="nav-item">
-					<Link className="nav-link" to="/">
+					<Link className="nav-link" to="/" onClick={this.handleLogout}>
 						Log out
 					</Link>
 				</li>
