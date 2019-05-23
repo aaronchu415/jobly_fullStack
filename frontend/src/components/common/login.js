@@ -15,7 +15,8 @@ class Login extends Component {
       password: '',
       firstname: '',
       lastname: '',
-      email: ''
+      email: '',
+      errors: []
     }
   }
 
@@ -33,6 +34,7 @@ class Login extends Component {
     this.setState({ signUpForm })
   }
 
+
   handleLoginSubmit = async (evt) => {
 
     const { loginForm } = this.state
@@ -48,29 +50,62 @@ class Login extends Component {
       let token = user.token
 
       if (token) {
-        //add to local storage
-        localStorage.setItem('_token', token)
 
-        //get curruser obj and set router level state
-        let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
-        login(currUser.user)
+        //set token and user data
+        await this._setTokenAndUser(username, token)
 
         //redirect to jobs
         this.props.history.push("/jobs");
 
       }
-
-
-
     } catch (errors) {
-
       //flash error messages
       let loginForm = { ...this.state.loginForm, errors }
       this.setState({ loginForm })
     }
 
+  }
 
+  handleSignupSubmit = async (evt) => {
 
+    const { signUpForm } = this.state
+    const { username, password, firstname: first_name, lastname: last_name, email } = signUpForm
+    const { login } = this.props
+
+    evt.preventDefault()
+
+    //Hit api end point to authenicate user
+    //if authenticated then history push to /jobs
+    try {
+      let user = await JoblyApi.request('users', { username, password, first_name, last_name, email }, 'post')
+      let token = user.token
+
+      if (token) {
+
+        //set token and user data
+        await this._setTokenAndUser(username, token)
+
+        //redirect to jobs
+        this.props.history.push("/jobs");
+
+      }
+    } catch (errors) {
+      //flash error messages
+      let signUpForm = { ...this.state.signUpForm, errors }
+      this.setState({ signUpForm })
+    }
+
+  }
+
+  _setTokenAndUser = async (username, token) => {
+    const { login } = this.props
+
+    //add to local storage
+    localStorage.setItem('_token', token)
+
+    //get curruser obj and set router level state
+    let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
+    login(currUser.user)
   }
 
   _toggleLogin = () => {
@@ -121,7 +156,7 @@ class Login extends Component {
   _renderSignUp() {
 
     const { signUpForm } = this.state
-    const { username, password, firstname, lastname, email } = signUpForm
+    const { username, password, firstname, lastname, email, errors } = signUpForm
 
     return (
       <div className="pt-5">
@@ -135,7 +170,7 @@ class Login extends Component {
             </div>
             <div className="card">
               <div className="card-body">
-                <form>
+                <form onSubmit={this.handleSignupSubmit}>
                   <div className="form-group">
                     <label>Username</label>
                     <input onChange={this.handleChangeSignup} name="username" className="form-control" value={username} />
@@ -156,6 +191,7 @@ class Login extends Component {
                     <label>Email</label>
                     <input onChange={this.handleChangeSignup} type="email" name="email" className="form-control" value={email} />
                   </div>
+                  {errors.length > 0 ? errors.map(err => <div key={err} className="alert alert-danger" role="alert"><p className="mb-0 small">{err}</p></div>) : null}
                   <button type="submit" className="btn btn-primary float-right">Submit</button>
                 </form>
               </div>
