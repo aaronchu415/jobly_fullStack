@@ -5,7 +5,7 @@ import './Home.css'
 class Home extends Component {
 
   __renderLoginButton = () => {
-    return <Link class="btn btn-primary font-weight-bold"
+    return <Link className="btn btn-primary font-weight-bold"
       to="/login">Log in</Link>
   }
 
@@ -18,11 +18,11 @@ class Home extends Component {
     const { isLogin } = this.props
 
     return (
-      <div class="pt-5">
-        <div class="Home">
-          <div class="container text-center">
-            <h1 class="mb-4 font-weight-bold">Jobly</h1>
-            <p class="lead">All the jobs in one, convenient place.</p>
+      <div className="pt-5">
+        <div className="Home">
+          <div className="container text-center">
+            <h1 className="mb-4 font-weight-bold">Jobly</h1>
+            <p className="lead">All the jobs in one, convenient place.</p>
             {isLogin ? this.__renderWelcomeBack() : this.__renderLoginButton()}
           </div>
         </div>

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import './login.css'
+import JoblyApi from '../../utils/JoblyApi';
 
 class Login extends Component {
   state = {
     showLogin: true,
     loginForm: {
       username: '',
-      password: ''
+      password: '',
+      errors: []
     },
     signUpForm: {
       username: '',
@@ -31,6 +33,46 @@ class Login extends Component {
     this.setState({ signUpForm })
   }
 
+  handleLoginSubmit = async (evt) => {
+
+    const { loginForm } = this.state
+    const { username, password } = loginForm
+    const { login } = this.props
+
+    evt.preventDefault()
+
+    //Hit api end point to authenicate user
+    //if authenticated then history push to /jobs
+    try {
+      let user = await JoblyApi.request('login', { username, password }, 'post')
+      let token = user.token
+
+      if (token) {
+        //add to local storage
+        localStorage.setItem('_token', token)
+
+        //get curruser obj and set router level state
+        let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
+        login(currUser)
+
+        //redirect to jobs
+        this.props.history.push("/jobs");
+
+      }
+
+
+
+    } catch (errors) {
+
+      //flash error messages
+      let loginForm = { ...this.state.loginForm, errors }
+      this.setState({ loginForm })
+    }
+
+
+
+  }
+
   _toggleLogin = () => {
 
     this.setState({ showLogin: true })
@@ -42,7 +84,7 @@ class Login extends Component {
   _renderLogin() {
 
     const { loginForm } = this.state
-    const { username, password } = loginForm
+    const { username, password, errors } = loginForm
 
     return (
       <div className="pt-5" >
@@ -56,7 +98,7 @@ class Login extends Component {
             </div>
             <div className="card">
               <div className="card-body">
-                <form>
+                <form onSubmit={this.handleLoginSubmit}>
                   <div className="form-group">
                     <label>Username</label>
                     <input onChange={this.handleChangeLogin} name="username" className="form-control" value={username} />
@@ -65,6 +107,7 @@ class Login extends Component {
                     <label>Password</label>
                     <input onChange={this.handleChangeLogin} type="password" name="password" className="form-control" value={password} />
                   </div>
+                  {errors.length > 0 ? errors.map(err => <div key={err} className="alert alert-danger" role="alert"><p className="mb-0 small">{err}</p></div>) : null}
                   <button type="submit" className="btn btn-primary float-right">Submit</button>
                 </form>
               </div>

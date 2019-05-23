@@ -30,7 +30,7 @@ class Companies extends Component {
     );
 
     const noResult = (
-      <p class="lead">Sorry, no results were found!</p>
+      <p className="lead">Sorry, no results were found!</p>
     );
 
     return (

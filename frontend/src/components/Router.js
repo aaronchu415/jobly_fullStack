@@ -30,11 +30,15 @@ class Router extends Component {
 				let username = jwt.decode(token).username;
 				let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
 				this.setState({ currUser });
-			} catch (e) {}
+			} catch (e) { }
 		}
 	}
 	handleLogout = () => {
 		this.setState({ currUser: null });
+	};
+
+	handleLogin = (currUser) => {
+		this.setState({ currUser });
 	};
 
 	render() {
@@ -47,11 +51,11 @@ class Router extends Component {
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
 					<Switch>
 						<Route exact path="/jobs" render={() => <Jobs />} />
-						<Route exact path="/login" render={() => <Login />} />
 						<Route exact path="/profile" render={() => <Profile />} />
 						<Route exact path="/companies" render={() => <Companies />} />
 						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} />} />
 						<Route exact path="/" render={() => <Home isLogin={true} />} />
+						<Redirect to="/" />
 					</Switch>
 				</BrowserRouter>
 			);
@@ -62,7 +66,7 @@ class Router extends Component {
 			<BrowserRouter>
 				<NavBar isLogin={false} />
 				<Switch>
-					<Route exact path="/login" render={() => <Login />} />
+					<Route exact path="/login" render={(routeP) => <Login {...routeP} login={this.handleLogin} />} />
 					<Route exact path="/" render={() => <Home isLogin={false} />} />
 					<Redirect to="/" />
 				</Switch>
