@@ -53,7 +53,7 @@ class Login extends Component {
 
         //get curruser obj and set router level state
         let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
-        login(currUser)
+        login(currUser.user)
 
         //redirect to jobs
         this.props.history.push("/jobs");

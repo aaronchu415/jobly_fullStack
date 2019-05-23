@@ -17,18 +17,14 @@ class Router extends Component {
 	};
 
 	async componentDidMount() {
-		localStorage.setItem(
-			'_token',
-			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3R1c2VyIiwiaXNfYWRtaW4iOmZhbHNlLCJpYXQiOjE1NTg1NTg5MzJ9.N-Si5GCaVo4yM-bOZczkcksvEcEOxpxytTqQiJhyX3g'
-		);
 
 		let token = localStorage.getItem('_token');
 		if (token) {
 			//get username from token
-
 			try {
 				let username = jwt.decode(token).username;
 				let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
+				currUser = currUser.user
 				this.setState({ currUser });
 			} catch (e) { }
 		}
@@ -38,6 +34,7 @@ class Router extends Component {
 	};
 
 	handleLogin = (currUser) => {
+
 		this.setState({ currUser });
 	};
 
@@ -45,7 +42,7 @@ class Router extends Component {
 		const { currUser } = this.state;
 
 		//if user is authenticated
-		if (currUser) {
+		if (currUser && currUser.username) {
 			return (
 				<BrowserRouter>
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
