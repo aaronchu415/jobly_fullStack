@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -16,22 +16,22 @@ class NavBar extends Component {
 		const isLoginNav = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item mr-4">
-					<Link className="nav-link" to="/companies">
+					<NavLink className="nav-link" activeClassName="active" exact to="/companies">
 						Companies
-					</Link>
+					</NavLink>
 				</li>
 				<li className="nav-item mr-4">
-					<Link className="nav-link" to="/jobs">
+					<NavLink className="nav-link" activeClassName="active" exact to="/jobs">
 						Jobs
-					</Link>
+					</NavLink>
 				</li>
 				<li className="nav-item mr-4">
-					<Link className="nav-link" to="/profile">
+					<NavLink className="nav-link" activeClassName="active" exact to="/profile">
 						Profile
-					</Link>
+					</NavLink>
 				</li>
 				<li className="nav-item">
-					<Link className="nav-link" to="/" onClick={this.handleLogout}>
+					<Link className="nav-link" exact to="/" onClick={this.handleLogout}>
 						Log out
 					</Link>
 				</li>
@@ -40,17 +40,17 @@ class NavBar extends Component {
 		const notLoginNav = (
 			<ul className="navbar-nav ml-auto">
 				<li className="nav-item">
-					<Link className="nav-link" to="/login">
+					<NavLink className="nav-link" activeClassName="active" exact to="/login">
 						Log In
-					</Link>
+					</NavLink>
 				</li>
 			</ul>
 		);
 		return (
 			<nav className="Navigation navbar navbar-expand-md">
-				<Link className="navbar-brand" to="/">
+				<NavLink className="navbar-brand" activeClassName="active" exact to="/">
 					Jobly
-				</Link>
+				</NavLink>
 				{this.props.isLogin ? isLoginNav : notLoginNav}
 			</nav>
 		);

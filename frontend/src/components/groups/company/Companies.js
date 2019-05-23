@@ -34,7 +34,7 @@ class Companies extends Component {
     );
 
     return (
-      <div className="pt-5">
+      <div className="view pt-5">
         <div className="col-md-8 offset-md-2">
           <Search submit={this.handleSearch} />
           {companies.length > 0
