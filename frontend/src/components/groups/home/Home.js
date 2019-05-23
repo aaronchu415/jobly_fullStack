@@ -10,7 +10,7 @@ class Home extends Component {
   }
 
   __renderWelcomeBack = () => {
-    return <h2>Welcome Back!</h2>
+    return <h2>Welcome Back {this.props.username}!</h2>
   }
 
   render() {
