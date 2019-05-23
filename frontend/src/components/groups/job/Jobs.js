@@ -5,9 +5,7 @@ import Search from '../../common/Search';
 
 class Jobs extends Component {
 	state = {
-		username: "",
-		searchedjJobs: [],
-		
+		searchedJobs: []		
 	};
 	async componentDidMount() {
 		await this.handleSearch();
@@ -15,33 +13,36 @@ class Jobs extends Component {
 
 	handleSearch = async (search = '') => {
 		let res = await JoblyApi.request('jobs', { search }, 'get');
-		let searchedjJobs = this.isAppliedJobs(res.jobs);
-		this.setState({ searchedjJobs });
+		let searchedJobs = this.isAppliedJobs(res.jobs);
+		this.setState({ searchedJobs });
 		return res;
 	};
 
-	// componentDidUpdate() {
-	// 	this.setState(this.props)
-	// }
-	handleApply = () => {
-		// TODO: send post request ot jobs/apply/jobId
+	handleApplyClick = async (id) => {
+		// send post request ot jobs/apply/jobId
+		const {username} = this.props;
+		const state = "applied";
+		let res = await JoblyApi.request(`jobs/${id}/apply`, { username, state }, 'post');
 		// to update state of parent
-		this.props.requestUserInfo()
+		await this.props.requestUserInfo()
+		// rerun state
+		await this.handleSearch();
 	}
 	isAppliedJobs = (jobs) => {
-		jobs = jobs.map((job) => this.props.appliedJobs.filter(job) ? job['isApplied'] = true : job['isApplied'] = false);
+		let idArr = this.props.appliedJobs.map((job)=>job.id);
+		jobs = jobs.map((job) => idArr.includes(job.id) ? {...job, 'isApplied': true} : {...job, 'isApplied': false}) ;
 		return jobs
 	}
 
 	render() {
-		const { searchedjJobs } = this.state;
+		const { searchedJobs } = this.state;
 		return (
 			<div className="pt-5">
 				<div className="col-md-8 offset-md-2">
 					<Search submit={this.handleSearch} />
 					<div className="CardList">
 						{/* TODO: isApplied if statement in  */}
-						{searchedjJobs.map((job) => <JobCard key={job.id} {...job} handleApply={this.handleApply}/>)}
+						{searchedJobs.map((job) => <JobCard key={job.id} {...job} handleApplyClick={this.handleApplyClick}/>)}
 
 					</div>
 				</div>

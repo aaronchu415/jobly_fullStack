@@ -56,7 +56,7 @@ class Router extends Component {
 				<BrowserRouter>
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
 					<Switch>
-						<Route exact path="/jobs" render={() => <Jobs username={currUser.username} jobs={currUser.jobs} requestUserInfo={this.requestUserInfo}/>} />
+						<Route exact path="/jobs" render={() => <Jobs username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo}/>} />
 						<Route exact path="/profile" render={() => <Profile submit={this.handleProfileChange} {...currUser} />} />
 						<Route exact path="/companies" render={() => <Companies />} />
 						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} />} />
