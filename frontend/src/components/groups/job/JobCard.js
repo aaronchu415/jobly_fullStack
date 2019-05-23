@@ -4,12 +4,26 @@ import './JobCard.css';
 class JobCard extends Component {
 	state = {};
 	handleApplyClick = () => {
-		// TODO: pass handle apply click
-		return;
+			this.props.handleApplyClick(this.props.id)
 	};
 	render() {
 		const { title, equity, salary, company_handle } = this.props;
 		const logo_url = 'http://graphicsmount.com/wp-content/uploads/edd/2017/08/Job-Search-Logo-1-1180x843.jpg';
+		
+		const applyButton = (
+			<button
+				className="btn apply btn-danger font-weight-bold text-uppercase float-right"
+				onClick={this.handleApplyClick}
+				> Apply
+			</button>
+		)
+		const appliedButton = (
+			<button
+				className="btn applied btn-danger font-weight-bold text-uppercase float-right" disabled='true'
+				> Applied
+			</button>
+		)
+		console.log('is applied:',this.props.isApplied)
 		return (
 			<div className="JobCard Card card">
 				<div className="card-body">
@@ -20,11 +34,7 @@ class JobCard extends Component {
 					<div className="text-left">
 						<div>Salary: {salary} </div> <div>Equity: {equity} </div> <div>Company: {company_handle} </div>
 					</div>
-				<button
-					className="btn btn-danger font-weight-bold text-uppercase float-right"
-					onClick={this.handleApplyClick}
-					> Apply
-				</button>		
+					{this.props.isApplied ? appliedButton : applyButton}
 				</div>
 			</div>
 		);
