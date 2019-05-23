@@ -38,6 +38,13 @@ class Router extends Component {
 		this.setState({ currUser });
 	};
 
+	handleProfileChange = (newUser) => {
+
+		let newUserObj = { ...this.state.currUser, ...newUser }
+
+		this.setState({ currUser: newUserObj });
+	}
+
 	render() {
 		const { currUser } = this.state;
 
@@ -48,10 +55,10 @@ class Router extends Component {
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
 					<Switch>
 						<Route exact path="/jobs" render={() => <Jobs />} />
-						<Route exact path="/profile" render={() => <Profile />} />
+						<Route exact path="/profile" render={() => <Profile submit={this.handleProfileChange} {...currUser} />} />
 						<Route exact path="/companies" render={() => <Companies />} />
 						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} />} />
-						<Route exact path="/" render={() => <Home isLogin={true} />} />
+						<Route exact path="/" render={() => <Home username={currUser.username} isLogin={true} />} />
 						<Redirect to="/" />
 					</Switch>
 				</BrowserRouter>

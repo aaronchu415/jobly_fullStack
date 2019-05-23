@@ -1,36 +1,62 @@
 import React, { Component } from 'react';
+import JoblyApi from '../../../utils/JoblyApi';
+import validatePass from '../../../utils/validatePass';
 
 class Profile extends Component {
   state = {
-    username: '',
-    first_name: '',
-    last_name: '',
-    email: '',
-    photo_url: '',
+    username: this.props.username,
+    first_name: this.props.first_name,
+    last_name: this.props.last_name,
+    email: this.props.email,
+    photo_url: this.props.photo_url || '',
     password: '',
+    errors: [],
+    success: false,
   }
 
   handleChange = (evt) => {
     this.setState({ [evt.target.name]: evt.target.value })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
 
     e.preventDefault();
-    this.props.submit(this.state);
-    this.setState({
-      username: '',
-      first_name: '',
-      last_name: '',
-      email: '',
-      photo_url: '',
-      password: '',
-    })
+    console.log(this.props)
+
+    const { username, password: userEnterPass } = this.state
+
+    if (!await validatePass(username, userEnterPass)) {
+      this.setState({ errors: ['Invalid Credentials'], success: false })
+      return
+    }
+
+    const data = { ...this.state }
+    delete data.password
+    delete data.username
+    delete data.errors
+    delete data.success
+
+    try {
+
+      let newUser = await JoblyApi.request(`users/${username}`, { ...data }, 'patch');
+      console.log('newUser', newUser)
+
+      this.setState({
+        success: true,
+        errors: []
+      })
+
+      this.props.submit(newUser.user);
+
+    } catch (errors) {
+      this.setState({ errors, success: false })
+    }
+
   }
 
   render() {
 
-    const { username, first_name, last_name, email, photo_url, password } = this.state
+    const { username, first_name, last_name, email, photo_url, password, errors, success } = this.state
 
     return (
       <div class="text-left pt-5">
@@ -63,6 +89,8 @@ class Profile extends Component {
                   <label>Re-enter Password</label>
                   <input onChange={this.handleChange} type="password" name="password" class="form-control" value={password} />
                 </div>
+                {errors.length > 0 ? errors.map(err => <div key={err} className="alert alert-danger" role="alert"><p className="mb-0 small">{err}</p></div>) : null}
+                {success ? <div className="alert alert-success" role="alert"><p className="mb-0 small">Update was successful!</p></div> : null}
                 <button class="btn btn-primary btn-block mt-4" disabled="">Save
               Changes</button>
               </form>
