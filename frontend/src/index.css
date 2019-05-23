@@ -11,7 +11,30 @@ body {
   background-color: var(--bgColor);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: url('/img/wall.jpg') center no-repeat;
+  background-size: cover;
+  filter: opacity(97%);
+  z-index: -5;
+  height:100vh;
 }
+
+
+
+
+
+/* body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; 
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size: cover; 
+  height:100%;
+  background-image: url('/img/wall.jpg');
+  filter: blur(5px) opacity(60%);
+  z-index: -1;
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

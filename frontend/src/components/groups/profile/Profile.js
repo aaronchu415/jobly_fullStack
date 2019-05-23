@@ -61,7 +61,7 @@ class Profile extends Component {
     return (
       <div class="text-left pt-5">
         <div class="col-md-6 col-lg-4 offset-md-3 offset-lg-4">
-          <h3>Profile</h3>
+          <h3 style={{ color: 'darkgray' }}>Edit Profile</h3>
           <div class="card">
             <div class="card-body">
               <form onSubmit={this.handleSubmit}>
