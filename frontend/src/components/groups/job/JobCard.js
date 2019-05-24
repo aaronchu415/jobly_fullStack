@@ -19,11 +19,10 @@ class JobCard extends Component {
 		)
 		const appliedButton = (
 			<button
-				className="btn applied btn-danger font-weight-bold text-uppercase float-right" disabled='true'
+				className="btn applied btn-danger font-weight-bold text-uppercase float-right" disabled={true}
 				> Applied
 			</button>
 		)
-		console.log('is applied:',this.props.isApplied)
 		return (
 			<div className="JobCard Card card">
 				<div className="card-body">
