@@ -1,6 +1,8 @@
 import axios from 'axios'
 // var axios = require('axios')
 
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+
 class JoblyApi {
   static async request(endpoint, paramsOrData = {}, verb = "get") {
 
@@ -11,7 +13,7 @@ class JoblyApi {
     try {
       return (await axios({
         method: verb,
-        url: `http://localhost:3001/${endpoint}`,
+        url: `${BASE_URL}/${endpoint}`,
         [verb === "get" ? "params" : "data"]: paramsOrData
       })).data;
       // axios sends query string data via the "params" key,

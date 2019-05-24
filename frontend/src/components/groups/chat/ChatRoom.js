@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import './ChatRoom.css'
+import httpUrlToWebSockeUrl from '../../../utils/http-to-ws';
 
-const URL = 'ws://localhost:3001/chat/chat/general'
+
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
+const BASE_WEB_URL = httpUrlToWebSockeUrl(BASE_URL)
+const URL = `${BASE_WEB_URL}/chat/chat/general`
 
 class ChatRoom extends Component {
   state = {
