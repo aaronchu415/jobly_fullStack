@@ -14,7 +14,7 @@ class NavBar extends Component {
 	render() {
 		// display different NavBar for login || logout user
 		const isLoginNav = (
-			<ul className="navbar-nav ml-auto">
+			<ul className="navbar-nav ml-auto flex-row">
 				<li className="nav-item mr-4">
 					<NavLink className="nav-link" activeClassName="active" exact to="/companies">
 						Companies
@@ -43,7 +43,7 @@ class NavBar extends Component {
 			</ul>
 		);
 		const notLoginNav = (
-			<ul className="navbar-nav ml-auto">
+			<ul className="navbar-nav ml-auto flex-row">
 				<li className="nav-item">
 					<NavLink className="nav-link" activeClassName="active" exact to="/login">
 						Log In
