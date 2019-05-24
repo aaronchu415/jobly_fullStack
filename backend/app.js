@@ -4,6 +4,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const wsExpress = require('express-ws')(app);
+
 app.use(express.json());
 app.use(cors());
 
@@ -16,11 +18,13 @@ app.use(morgan("tiny"));
 const usersRoutes = require("./routes/users");
 const companiesRoutes = require("./routes/companies");
 const jobsRoutes = require("./routes/jobs");
+const chatRoutes = require("./routes/chat");
 const authRoutes = require("./routes/auth");
 
 app.use("/companies", companiesRoutes);
 app.use("/jobs", jobsRoutes);
 app.use("/users", usersRoutes);
+app.use("/chat", chatRoutes);
 app.use("/", authRoutes);
 
 /** 404 handler */

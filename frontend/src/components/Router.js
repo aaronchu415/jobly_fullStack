@@ -8,16 +8,21 @@ import Company from './groups/company/Company';
 import Home from './groups/home/Home';
 import NavBar from './common/NavBar';
 import JoblyApi from '../utils/JoblyApi';
+import ChatRoom from './groups/chat/ChatRoom';
+
+
 
 const jwt = require('jsonwebtoken');
 
 class Router extends Component {
 	state = {
-		currUser: null
+		currUser: null,
+		isLoading: true
 	};
 
 	async componentDidMount() {
 		await this.requestUserInfo();
+		this.setState({ isLoading: false });
 	}
 	handleLogout = () => {
 		this.setState({ currUser: null });
@@ -36,7 +41,9 @@ class Router extends Component {
 				let currUser = await JoblyApi.request(`users/${username}`, { _token: token }, 'get');
 				currUser = currUser.user
 				this.setState({ currUser });
-			} catch (e) { }
+			} catch (e) {
+				this.setState({ isLoading: false });
+			}
 		}
 	}
 
@@ -48,18 +55,19 @@ class Router extends Component {
 	}
 
 	render() {
-		const { currUser } = this.state;
+		const { currUser, isLoading } = this.state;
 
 		//if user is authenticated
-		if (currUser && currUser.username) {
+		if (currUser && currUser.username && !(isLoading)) {
 			return (
 				<BrowserRouter>
 					<NavBar isLogin={true} handleLogout={this.handleLogout} />
 					<Switch>
-						<Route exact path="/jobs" render={() => <Jobs username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo}/>} />
+						<Route exact path="/jobs" render={() => <Jobs username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo} />} />
 						<Route exact path="/profile" render={() => <Profile submit={this.handleProfileChange} {...currUser} />} />
 						<Route exact path="/companies" render={() => <Companies />} />
-						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo}/>} />
+						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo} />} />
+						<Route exact path="/chat" render={() => <ChatRoom></ChatRoom>} />
 						<Route exact path="/" render={() => <Home username={currUser.username} isLogin={true} />} />
 						<Redirect to="/" />
 					</Switch>
@@ -74,7 +82,7 @@ class Router extends Component {
 				<Switch>
 					<Route exact path="/login" render={(routeP) => <Login {...routeP} login={this.handleLogin} />} />
 					<Route exact path="/" render={() => <Home isLogin={false} />} />
-					<Redirect to="/" />
+					{!(isLoading) ? <Redirect to="/" /> : null}
 				</Switch>
 			</BrowserRouter>
 		);
