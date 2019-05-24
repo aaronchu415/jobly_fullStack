@@ -73,6 +73,15 @@ class ChatRoom extends Component {
     this.setState({ [evt.target.name]: evt.target.value })
   }
 
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
+  }
+
+
   render() {
 
     const { messages } = this.state
@@ -84,7 +93,14 @@ class ChatRoom extends Component {
         <div className="col-md-8 offset-md-2">
           <div className='ChatRoom'>
             <ul id="messages">
-              {messages.map(msg => <li><b>{msg.name}: </b>{msg.text}</li>)}
+              {messages.map((msg, i) => {
+                if (i === messages.length - 1) {
+                  return <li ref={(el) => this.messagesEnd = el}><b>{msg.name}: </b>{msg.text}</li>
+                }
+                return <li><b>{msg.name}: </b>{msg.text}</li>
+              }
+              )
+              }
             </ul>
             <form id="msg-form" onSubmit={this.handleSubmit}>
               <input onChange={this.handleChange} id="m" name='text' autocomplete="off" value={this.state.text} />

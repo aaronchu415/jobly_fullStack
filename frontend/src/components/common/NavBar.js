@@ -30,6 +30,11 @@ class NavBar extends Component {
 						Profile
 					</NavLink>
 				</li>
+				<li className="nav-item mr-4">
+					<NavLink className="nav-link" activeClassName="active" exact to="/chat">
+						Chat
+					</NavLink>
+				</li>
 				<li className="nav-item">
 					<Link className="nav-link" to="/" onClick={this.handleLogout}>
 						Log out
