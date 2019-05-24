@@ -67,7 +67,7 @@ class Router extends Component {
 						<Route exact path="/profile" render={() => <Profile submit={this.handleProfileChange} {...currUser} />} />
 						<Route exact path="/companies" render={() => <Companies />} />
 						<Route exact path="/companies/:handle" render={(routeP) => <Company {...routeP} username={currUser.username} appliedJobs={currUser.jobs} requestUserInfo={this.requestUserInfo} />} />
-						<Route exact path="/chat" render={() => <ChatRoom></ChatRoom>} />
+						<Route exact path="/chat" render={() => <ChatRoom user={currUser.username}></ChatRoom>} />
 						<Route exact path="/" render={() => <Home username={currUser.username} isLogin={true} />} />
 						<Redirect to="/" />
 					</Switch>
