@@ -59,7 +59,7 @@ class Profile extends Component {
     const { username, first_name, last_name, email, photo_url, password, errors, success } = this.state
 
     return (
-      <div class="text-left pt-5">
+      <div class="view text-left pt-5">
         <div class="col-md-6 col-lg-4 offset-md-3 offset-lg-4">
           <h3 style={{ color: 'darkgray' }}>Edit Profile</h3>
           <div class="card">
