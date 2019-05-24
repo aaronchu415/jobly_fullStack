@@ -122,7 +122,7 @@ class Login extends Component {
     const { username, password, errors } = loginForm
 
     return (
-      <div className="pt-5" >
+      <div className="view pt-5" >
         <div className="Login">
           <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
             <div className="d-flex justify-content-end">
